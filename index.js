@@ -1,21 +1,12 @@
-function mergeTwoLists(l1, l2) {
-  const dummy = new ListNode();
-  let current = dummy;
-  while (l1 !== null && l2 !== null) {
-    if (l1.val < l2.val) {
-      current.next = l1;
-      l1 = l1.next;
-    } else {
-      current.next = l2;
-      l2 = l2.next;
+function combinationSum4(nums, target) {
+  const dp = new Array(target + 1).fill(0);
+  dp[0] = 1;
+  for (let i = 1; i <= target; i++) {
+    for (const num of nums) {
+      if (i >= num) {
+        dp[i] += dp[i - num];
+      }
     }
-    current = current.next;
   }
-  if (l1 !== null) {
-    current.next = l1;
-  }
-  if (l2 !== null) {
-    current.next = l2;
-  }
-  return dummy.next;
+  return dp[target];
 }

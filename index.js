@@ -1,13 +1,14 @@
-function rightSideView(root) {
-  if (!root) return [];
-  const result = [];
-  let level = 0;
-  const traverse = (node, level) => {
-    if (!node) return;
-    if (result[level] === undefined) result[level] = node.val;
-    traverse(node.right, level + 1);
-    traverse(node.left, level + 1);
+function rob(nums) {
+  if (nums.length === 1) return nums[0];
+  const robRange = (start, end) => {
+    let prevMax = 0;
+    let currMax = 0;
+    for (let i = start; i <= end; i++) {
+      const temp = currMax;
+      currMax = Math.max(currMax, prevMax + nums[i]);
+      prevMax = temp;
+    }
+    return currMax;
   };
-  traverse(root, level);
-  return result;
+  return Math.max(robRange(0, nums.length - 2), robRange(1, nums.length - 1));
 }
